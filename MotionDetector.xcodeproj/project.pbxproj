@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B607AD6A349FAD815433D146 /* libPods-MotionDetector.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 851D4D1A3708A7A58612D74A /* libPods-MotionDetector.a */; };
+		C383E82E1AEF889100AB984D /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = C383E82D1AEF889100AB984D /* Session.m */; };
+		C383E8311AEF88AE00AB984D /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C383E8301AEF88AE00AB984D /* Activity.m */; };
+		C383E8401AEF8CD500AB984D /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = C383E83F1AEF8CD500AB984D /* Location.m */; };
+		C383E8481AEFA6B100AB984D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C383E8471AEFA6B100AB984D /* Foundation.framework */; };
+		C383E84A1AEFA6C400AB984D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C383E8491AEFA6C400AB984D /* CoreLocation.framework */; };
+		C383E84C1AEFA6CD00AB984D /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C383E84B1AEFA6CD00AB984D /* CoreMotion.framework */; };
+		C383E8501AEFA85900AB984D /* EVLMotionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C383E84F1AEFA85900AB984D /* EVLMotionManager.m */; };
+		C383E8531AEFA87300AB984D /* EVLLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C383E8521AEFA87300AB984D /* EVLLocationManager.m */; };
+		C383E8561AEFC11800AB984D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C383E8551AEFC11800AB984D /* AVFoundation.framework */; };
 		C3D0D0251AEF7BEF005A006B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0D0241AEF7BEF005A006B /* main.m */; };
 		C3D0D0281AEF7BEF005A006B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0D0271AEF7BEF005A006B /* AppDelegate.m */; };
 		C3D0D02B1AEF7BEF005A006B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0D02A1AEF7BEF005A006B /* ViewController.m */; };
@@ -27,6 +37,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E69DAAD73925FC965007806 /* Pods-MotionDetector.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotionDetector.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MotionDetector/Pods-MotionDetector.debug.xcconfig"; sourceTree = "<group>"; };
+		851D4D1A3708A7A58612D74A /* libPods-MotionDetector.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MotionDetector.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0933B10631CF11F3F156F6 /* Pods-MotionDetector.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotionDetector.release.xcconfig"; path = "Pods/Target Support Files/Pods-MotionDetector/Pods-MotionDetector.release.xcconfig"; sourceTree = "<group>"; };
+		C383E82C1AEF889100AB984D /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Session.h; path = Domain/Session.h; sourceTree = "<group>"; };
+		C383E82D1AEF889100AB984D /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Session.m; path = Domain/Session.m; sourceTree = "<group>"; };
+		C383E82F1AEF88AE00AB984D /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Domain/Activity.h; sourceTree = "<group>"; };
+		C383E8301AEF88AE00AB984D /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = Domain/Activity.m; sourceTree = "<group>"; };
+		C383E83E1AEF8CD500AB984D /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = Domain/Location.h; sourceTree = "<group>"; };
+		C383E83F1AEF8CD500AB984D /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = Domain/Location.m; sourceTree = "<group>"; };
+		C383E8471AEFA6B100AB984D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C383E8491AEFA6C400AB984D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		C383E84B1AEFA6CD00AB984D /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		C383E84E1AEFA85900AB984D /* EVLMotionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVLMotionManager.h; path = Controller/EVLMotionManager.h; sourceTree = "<group>"; };
+		C383E84F1AEFA85900AB984D /* EVLMotionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EVLMotionManager.m; path = Controller/EVLMotionManager.m; sourceTree = "<group>"; };
+		C383E8511AEFA87300AB984D /* EVLLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVLLocationManager.h; path = Controller/EVLLocationManager.h; sourceTree = "<group>"; };
+		C383E8521AEFA87300AB984D /* EVLLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EVLLocationManager.m; path = Controller/EVLLocationManager.m; sourceTree = "<group>"; };
+		C383E8551AEFC11800AB984D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C3D0D01F1AEF7BEF005A006B /* MotionDetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionDetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D0D0231AEF7BEF005A006B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3D0D0241AEF7BEF005A006B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -47,6 +74,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C383E8561AEFC11800AB984D /* AVFoundation.framework in Frameworks */,
+				C383E84C1AEFA6CD00AB984D /* CoreMotion.framework in Frameworks */,
+				C383E84A1AEFA6C400AB984D /* CoreLocation.framework in Frameworks */,
+				C383E8481AEFA6B100AB984D /* Foundation.framework in Frameworks */,
+				B607AD6A349FAD815433D146 /* libPods-MotionDetector.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +92,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0902A4B3316FE5CB2EF1CF0A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C383E8551AEFC11800AB984D /* AVFoundation.framework */,
+				C383E84B1AEFA6CD00AB984D /* CoreMotion.framework */,
+				C383E8491AEFA6C400AB984D /* CoreLocation.framework */,
+				C383E8471AEFA6B100AB984D /* Foundation.framework */,
+				851D4D1A3708A7A58612D74A /* libPods-MotionDetector.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C383E84D1AEFA82800AB984D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C383E84E1AEFA85900AB984D /* EVLMotionManager.h */,
+				C383E84F1AEFA85900AB984D /* EVLMotionManager.m */,
+				C383E8511AEFA87300AB984D /* EVLLocationManager.h */,
+				C383E8521AEFA87300AB984D /* EVLLocationManager.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		C383E8541AEFB33400AB984D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C3D0D0291AEF7BEF005A006B /* ViewController.h */,
+				C3D0D02A1AEF7BEF005A006B /* ViewController.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		C3D0D0161AEF7BEF005A006B = {
 			isa = PBXGroup;
 			children = (
 				C3D0D0211AEF7BEF005A006B /* MotionDetector */,
 				C3D0D03B1AEF7BEF005A006B /* MotionDetectorTests */,
 				C3D0D0201AEF7BEF005A006B /* Products */,
+				CB719A6F0FFC7BF281518ADD /* Pods */,
+				0902A4B3316FE5CB2EF1CF0A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,10 +147,11 @@
 		C3D0D0211AEF7BEF005A006B /* MotionDetector */ = {
 			isa = PBXGroup;
 			children = (
+				C383E8541AEFB33400AB984D /* View */,
+				C383E84D1AEFA82800AB984D /* Controller */,
+				C3D0D04B1AEF8675005A006B /* Domain */,
 				C3D0D0261AEF7BEF005A006B /* AppDelegate.h */,
 				C3D0D0271AEF7BEF005A006B /* AppDelegate.m */,
-				C3D0D0291AEF7BEF005A006B /* ViewController.h */,
-				C3D0D02A1AEF7BEF005A006B /* ViewController.m */,
 				C3D0D02C1AEF7BEF005A006B /* Main.storyboard */,
 				C3D0D02F1AEF7BEF005A006B /* Images.xcassets */,
 				C3D0D0311AEF7BEF005A006B /* LaunchScreen.xib */,
@@ -119,6 +186,28 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C3D0D04B1AEF8675005A006B /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				C383E82C1AEF889100AB984D /* Session.h */,
+				C383E82D1AEF889100AB984D /* Session.m */,
+				C383E82F1AEF88AE00AB984D /* Activity.h */,
+				C383E8301AEF88AE00AB984D /* Activity.m */,
+				C383E83E1AEF8CD500AB984D /* Location.h */,
+				C383E83F1AEF8CD500AB984D /* Location.m */,
+			);
+			name = Domain;
+			sourceTree = "<group>";
+		};
+		CB719A6F0FFC7BF281518ADD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2E69DAAD73925FC965007806 /* Pods-MotionDetector.debug.xcconfig */,
+				AA0933B10631CF11F3F156F6 /* Pods-MotionDetector.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,9 +215,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C3D0D0421AEF7BEF005A006B /* Build configuration list for PBXNativeTarget "MotionDetector" */;
 			buildPhases = (
+				7A3CDC04165A6163D11A41B8 /* Check Pods Manifest.lock */,
 				C3D0D01B1AEF7BEF005A006B /* Sources */,
 				C3D0D01C1AEF7BEF005A006B /* Frameworks */,
 				C3D0D01D1AEF7BEF005A006B /* Resources */,
+				8E0F0A22F0EB782487F726D3 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -170,6 +261,11 @@
 					C3D0D01E1AEF7BEF005A006B = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = V97DYPZ9HQ;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					C3D0D0371AEF7BEF005A006B = {
 						CreatedOnToolsVersion = 6.3;
@@ -216,14 +312,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7A3CDC04165A6163D11A41B8 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8E0F0A22F0EB782487F726D3 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MotionDetector/Pods-MotionDetector-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C3D0D01B1AEF7BEF005A006B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C383E82E1AEF889100AB984D /* Session.m in Sources */,
 				C3D0D02B1AEF7BEF005A006B /* ViewController.m in Sources */,
+				C383E8531AEFA87300AB984D /* EVLLocationManager.m in Sources */,
 				C3D0D0281AEF7BEF005A006B /* AppDelegate.m in Sources */,
+				C383E8501AEFA85900AB984D /* EVLMotionManager.m in Sources */,
 				C3D0D0251AEF7BEF005A006B /* main.m in Sources */,
+				C383E8401AEF8CD500AB984D /* Location.m in Sources */,
+				C383E8311AEF88AE00AB984D /* Activity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +481,7 @@
 		};
 		C3D0D0431AEF7BEF005A006B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E69DAAD73925FC965007806 /* Pods-MotionDetector.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -358,6 +493,7 @@
 		};
 		C3D0D0441AEF7BEF005A006B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA0933B10631CF11F3F156F6 /* Pods-MotionDetector.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -420,6 +556,7 @@
 				C3D0D0441AEF7BEF005A006B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C3D0D0451AEF7BEF005A006B /* Build configuration list for PBXNativeTarget "MotionDetectorTests" */ = {
 			isa = XCConfigurationList;
@@ -428,6 +565,7 @@
 				C3D0D0471AEF7BEF005A006B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

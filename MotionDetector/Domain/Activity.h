@@ -7,9 +7,22 @@
 //
 
 #import <Realm/Realm.h>
+#import "Location.h"
+#import <CoreMotion/CoreMotion.h>
 
 @interface Activity : RLMObject
-<# Add properties here to define the model #>
+
+@property NSDate* startTime;
+
+//Activity types CMMotion may record 2 activities at once therefore bools for each
+@property BOOL unknown;
+@property BOOL stationary;
+@property BOOL walking;
+@property BOOL running;
+@property BOOL automotive;
+@property BOOL cycling;
+
+@property RLMArray<Location>* locations;
 @end
 
 // This protocol enables typed collections. i.e.:

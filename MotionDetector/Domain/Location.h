@@ -9,7 +9,17 @@
 #import <Realm/Realm.h>
 
 @interface Location : RLMObject
-<# Add properties here to define the model #>
+
+@property NSString* locationDescription;
+@property NSDate* timestamp;
+
+@property double speed;
+@property double direction;
+@property double longitude;
+@property double latitude;
+@property double distance;
+@property double acuracy;
+
 @end
 
 // This protocol enables typed collections. i.e.:

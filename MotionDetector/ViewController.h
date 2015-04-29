@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreMotion/CoreMotion.h>
+#import "EVLMotionManager.h"
 
 @interface ViewController : UIViewController
 
 
+
+@property (weak, nonatomic) IBOutlet UILabel *activityTypeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *currentActivityDurationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sessionDurationLabel;
 @end
 

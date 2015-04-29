@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "EVLMotionManager.h"
+
 
 @interface ViewController ()
 
@@ -16,7 +18,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    EVLMotionManager *motionManager = [EVLMotionManager new];
+    [motionManager startActivityDetection];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uppdateInterfaceWithActivity:) name:@"MotionActivityChangedNotification" object:nil];
+}
+
+- (void)uppdateInterfaceWithActivity:(NSNotification*)notification{
+    
+          NSLog(@"Updating viewController UI with Activity %@",notification );
+        NSDateFormatter * formatterTime = [NSDateFormatter new];
+        formatterTime.dateFormat = @"hh : mm : ss";
+        _currentActivityDurationLabel.text = [formatterTime stringFromDate:[notification.object valueForKey:@"startTime"]];
+    
+    
+}
+
+- (void)timerLabel{
+   
 }
 
 - (void)didReceiveMemoryWarning {

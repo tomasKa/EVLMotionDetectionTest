@@ -7,9 +7,17 @@
 //
 
 #import <Realm/Realm.h>
+#import "Activity.h"
+
+
+@class Session;
 
 @interface Session : RLMObject
-<# Add properties here to define the model #>
+
+@property RLMArray<Activity> *activities;
+@property NSDate * startTime;
+
+
 @end
 
 // This protocol enables typed collections. i.e.:
