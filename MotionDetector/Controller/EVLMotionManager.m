@@ -12,18 +12,18 @@
 {
     NSInteger previousConfidence;
     CMMotionActivity *previousActivity;
+    RLMArray *activitiesArray;
+    Session *activitySession;
 }
 
 - (void)startActivityDetection{
     
     _activityManager = [CMMotionActivityManager new];
-    
     [_activityManager startActivityUpdatesToQueue:[NSOperationQueue new] withHandler:^(CMMotionActivity *activity) {
         
         if (!previousActivity) {
             previousActivity = [CMMotionActivity new];
         }
-        
         if (activity.unknown != previousActivity.unknown || activity.stationary != previousActivity.stationary || activity.walking != previousActivity.walking || activity.running != previousActivity.running || activity.automotive != previousActivity.automotive ||activity.cycling != previousActivity.cycling) {
             [self performSelector:@selector(updateActivityWithActivity:) withObject:activity];
         }
@@ -34,9 +34,6 @@
         if (activity.confidence == CMMotionActivityConfidenceHigh) {
             [self startNewSessionWithActivity:activity];
         }
-
-        
-       // [self performSelector:@selector(updateActivityWithActivity:) withObject:activity];
     }];
 }
 
@@ -49,7 +46,6 @@
         previousActivity = [CMMotionActivity new];
     }
     previousConfidence = motionActivity.confidence;
-
     previousActivity = motionActivity;
 
     if (motionActivity.confidence== CMMotionActivityConfidenceHigh) {
@@ -62,38 +58,32 @@
     if (motionActivity.confidence==CMMotionActivityConfidenceLow) {
         confidenceString = @"UNLIKELY...";
     }
-    
     if (motionActivity.stationary) {
         activityInfoString = [NSString stringWithFormat:@"stationary"];;
-    
     }
     if (motionActivity.walking) {
        activityInfoString = [NSString stringWithFormat:@"walking"];
-
     }
     if (motionActivity.running) {
         activityInfoString = [NSString stringWithFormat:@"running"];
-        
     }
     if (motionActivity.automotive) {
         activityInfoString = [NSString stringWithFormat:@"automotive"];
-        
     }
     if (motionActivity.cycling) {
        activityInfoString = [NSString stringWithFormat:@"cycling"];
-        
     }
     if (motionActivity.unknown) {
        activityInfoString = [NSString stringWithFormat:@"unknown"];
     }
     
     if (!motionActivity.unknown && !motionActivity.cycling && !motionActivity.running && !motionActivity.walking && !motionActivity.stationary){
-        activityInfoString = @"NOTHING";
+        activityInfoString = @"None";
         NSLog(@"%@", motionActivity);
     }
     NSLog(@" \n UNKNNOWN :%d,STATIONARY: %d WALKING: %d RUNNING: %d AUTOMOTIVE: %d CYCLING: %d", motionActivity.unknown, motionActivity.stationary, motionActivity.walking, motionActivity.running, motionActivity.automotive, motionActivity.cycling);
 
-    NSString * vocalString = [NSString stringWithFormat:@" New activity: %@ | %@", confidenceString, activityInfoString];
+    NSString * vocalString = [NSString stringWithFormat:@"%@ : %@",activityInfoString,confidenceString];
    
     NSLog(@"%@", vocalString);
 
@@ -105,9 +95,7 @@
     [_speechSyntesizer speakUtterance:utterance];
     
 }
-
 - (void)onlyConfidenceChanged:(CMMotionActivity*)motionActivity{
-    
     
     NSLog(@"Only conficenceChanged to %li", (long)motionActivity.confidence);
     previousConfidence = motionActivity.confidence;
@@ -120,58 +108,40 @@
     }
     if (motionActivity.confidence== CMMotionActivityConfidenceMedium){
         confidenceString = @"PROBABLY ";
-        
     }
     if (motionActivity.confidence==CMMotionActivityConfidenceLow) {
         confidenceString = @"UNLIKELY...";
     }
     NSLog(@"%@", confidenceString);
-
     if (motionActivity.stationary) {
         activityInfoString = [NSString stringWithFormat:@"stationary"];;
-        
     }
     if (motionActivity.walking) {
         activityInfoString = [NSString stringWithFormat:@"walking"];
-        
     }
     if (motionActivity.running) {
         activityInfoString = [NSString stringWithFormat:@"running"];
-        
     }
     if (motionActivity.automotive) {
         activityInfoString = [NSString stringWithFormat:@"automotive"];
-        
     }
     if (motionActivity.cycling) {
         activityInfoString = [NSString stringWithFormat:@"cycling"];
-        
     }
     if (motionActivity.unknown) {
         activityInfoString = [NSString stringWithFormat:@"unknown"];
     }
-    
     if (!motionActivity.unknown && !motionActivity.cycling && !motionActivity.running && !motionActivity.walking && !motionActivity.stationary){
         activityInfoString = @"NOTHING";
     }
-    
     NSLog(@"%@", activityInfoString);
-
-//    
-//    AVSpeechUtterance *utterance =[AVSpeechUtterance speechUtteranceWithString: @"confidence changed"];
-//    _speechSyntesizer = [[AVSpeechSynthesizer alloc] init] ;
-//    [_speechSyntesizer speakUtterance:utterance];
 
 }
 
 - (void)startNewSessionWithActivity:(CMMotionActivity*)activity{
     
-    NSNotificationCenter * notificationCenter = [NSNotificationCenter defaultCenter];
-    
-    
-    
-    RLMRealm *realm = [RLMRealm defaultRealm];
     Activity * dbActivity = [Activity new];
+    
     dbActivity.unknown =activity.unknown;
     dbActivity.stationary = activity.stationary;
     dbActivity.walking = activity.walking;
@@ -181,15 +151,34 @@
     dbActivity.startTime = activity.startDate;
     dbActivity.locations = nil;
     
-    Session * dbSession = [Session new];
-    [dbSession.activities addObject:dbActivity];
-    dbSession.startTime = activity.startDate;
-  
-        [realm beginWriteTransaction];
-    [realm addObject:dbSession];
-    [realm commitWriteTransaction];
+    
+    if (!activitySession || activitySession.activities.count< 1) {
+        activitySession = [Session new];
+        activitySession.startTime = activity.startDate;
+        [activitySession.activities addObject:dbActivity];
+    }
+    
+    else{
+        [activitySession.activities addObject:dbActivity];
+    }
+    
     NSLog(@"Writing to realm");
-    [notificationCenter postNotificationName:@"MotionActivityChangedNotification" object:dbActivity];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MotionActivityChangedNotification" object:dbActivity];
+}
+
+- (void)commitSession:(Session*)session WithActivitiesArray:(RLMArray*)array{
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm addObject:session];
+    [realm commitWriteTransaction];
+}
+
+- (void) notifyByVoiceWithString:(NSString*)string{
+    
+        AVSpeechUtterance *utterance =[AVSpeechUtterance speechUtteranceWithString: string];
+        _speechSyntesizer = [[AVSpeechSynthesizer alloc] init] ;
+        [_speechSyntesizer speakUtterance:utterance];
 }
 
 @end
