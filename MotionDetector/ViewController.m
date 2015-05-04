@@ -27,9 +27,9 @@
 
 - (void)uppdateInterfaceWithActivity:(NSNotification*)notification{
     
-          NSLog(@"Updating viewController UI with Activity %@",notification );
+        NSLog(@"Updating viewController UI with Activity %@",notification );
         NSDateFormatter * formatterTime = [NSDateFormatter new];
-        formatterTime.dateFormat = @"hh : mm : ss";
+        formatterTime.dateFormat = @"hh:mm:ss";
         _currentActivityDurationLabel.text = [formatterTime stringFromDate:[notification.object valueForKey:@"startTime"]];
     
     
