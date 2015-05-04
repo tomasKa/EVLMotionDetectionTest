@@ -23,6 +23,11 @@
     [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error:&setCategoryErr];
     [[AVAudioSession sharedInstance] setActive:YES error:&activationErr];
     
+    //Start motion tracking
+    EVLMotionManager *motionManager = [EVLMotionManager new];
+    [motionManager startActivityDetection];
+    
+
     return YES;
 }
 

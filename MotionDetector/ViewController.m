@@ -19,8 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    EVLMotionManager *motionManager = [EVLMotionManager new];
-    [motionManager startActivityDetection];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uppdateInterfaceWithActivity:) name:@"MotionActivityChangedNotification" object:nil];
 }
@@ -31,7 +30,6 @@
         NSDateFormatter * formatterTime = [NSDateFormatter new];
         formatterTime.dateFormat = @"hh:mm:ss";
         _currentActivityDurationLabel.text = [formatterTime stringFromDate:[notification.object valueForKey:@"startTime"]];
-    
     
 }
 
