@@ -7,238 +7,278 @@
 //
 
 #import "EVLMotionManager.h"
+#import <CoreMotion/CoreMotion.h>
+#import <Realm/Realm.h>
+#import "Activity.h"
+#import "Session.h"
+#import "Location.h"
+#import "EVLConstants.h"
+@import CoreLocation;
 
 @implementation EVLMotionManager
 {
     NSInteger previousConfidence;
     CMMotionActivity *previousActivity;
    
-    Activity *currentActivity;
-    Session *activitySession;
-    Location *currentLocation;
+    NSString *currentActivity;
+    NSString  *currentSession;
 }
+
+- (id)init {
+    if (self = [super init]) {
+        
+        //Location manager
+        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.delegate = self;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+            [self.locationManager requestAlwaysAuthorization];
+        }
+        //Motion manager
+        self.activityManager = [[CMMotionActivityManager alloc] init];
+    }
+    return self;
+}
+
 - (void)startActivityDetection{
-    
-        _activityManager = [CMMotionActivityManager new];
-    
+  
+   
     [_activityManager startActivityUpdatesToQueue:[NSOperationQueue new] withHandler:^(CMMotionActivity *activity) {
-       
-        if (!previousActivity) {
-            previousActivity = [CMMotionActivity new];
+        
+            if (!previousActivity) {
+                previousActivity = [CMMotionActivity new];
+            }
+            if (activity.unknown != previousActivity.unknown || activity.stationary != previousActivity.stationary || activity.walking != previousActivity.walking || activity.running != previousActivity.running || activity.automotive != previousActivity.automotive ||activity.cycling != previousActivity.cycling) {
                 
-        }
-        if (activity.unknown != previousActivity.unknown || activity.stationary != previousActivity.stationary || activity.walking != previousActivity.walking || activity.running != previousActivity.running || activity.automotive != previousActivity.automotive ||activity.cycling != previousActivity.cycling) {
-            //New activity
-            [self performSelector:@selector(updateActivityWithActivity:) withObject:activity];
-        }
-        if (activity.confidence != previousActivity.confidence) {
-            
-            [self performSelector:@selector(onlyConfidenceChanged:) withObject:activity];
-            
-        }
-        if (activity.confidence == CMMotionActivityConfidenceHigh) {
-            
-            [self startNewSessionWithActivity:activity];
-        }
+                [self updateActivityWithNewActivity:activity];
+            }
+            if (activity.confidence != previousActivity.confidence) {
+                
+                [self confidenceChanged:activity];
+            }
+        
+            if (activity.confidence == CMMotionActivityConfidenceHigh) {
+                
+                if (!currentSession){
+                    [self startNewSessionWithActivity:activity];
+                    [self startLocationDetection];
+                }
+                else{
+                    
+                    [self persistNewActivity:activity];
+                }
+            }
+            else if(activity.confidence == CMMotionActivityConfidenceHigh && !activity.stationary){
+                
+                NSLog(@"Activity is not stationary");
+                currentSession = nil;
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"MotionActivityChangedNotification" object:[self resolveActivityTypeofActivity:activity]];
     }];
 }
 
-- (void)updateActivityWithActivity:(CMMotionActivity*)motionActivity{
+- (NSString *const)resolveActivityTypeofActivity:(CMMotionActivity*)activity{
     
-    NSString * activityInfoString = [NSString new];
-    NSString * confidenceString = [NSString new];
+    NSString *returnString = kActivityTypeUnknown;
+    if(activity.automotive && activity.startDate){
+        returnString = kActivityTypeAutomotiveStationary;
+    }
+    else if (activity.automotive) {
+        returnString = kActivityTypeAutomotive;
+    }
+    else if (activity.stationary) {
+        returnString = kActivityTypeStationary;
+    }
+    else if (activity.cycling) {
+        returnString = kActivityTypeCycling;
+    }
+    else if (activity.walking) {
+        returnString = kActivityTypeWalking;
+    }
+    else if (activity.running) {
+        returnString = kActivityTypeRunning;
+    }
+    return returnString;
+}
+
+//---------------------------------------------------------------------------
+#pragma mark - Core Motion handling and delegate methods
+//---------------------------------------------------------------------------
+
+
+- (void)updateActivityWithNewActivity:(CMMotionActivity*)motionActivity{
+    
+
     if (!previousActivity) {
-        
         previousActivity = [CMMotionActivity new];
     }
     previousConfidence = motionActivity.confidence;
     previousActivity = motionActivity;
-
-    if (motionActivity.confidence== CMMotionActivityConfidenceHigh) {
-        confidenceString = @"DEFINETELY ";
-           }
-    if (motionActivity.confidence== CMMotionActivityConfidenceMedium){
-        confidenceString = @"PROBABLY ";
-    }
-    if (motionActivity.confidence==CMMotionActivityConfidenceLow) {
-        confidenceString = @"UNLIKELY...";
-    }
-    if (motionActivity.stationary) {
-        activityInfoString = [NSString stringWithFormat:@"stationary"];;
-    }
-    if (motionActivity.walking) {
-       activityInfoString = [NSString stringWithFormat:@"walking"];
-    }
-    if (motionActivity.running) {
-        activityInfoString = [NSString stringWithFormat:@"running"];
-    }
-    if (motionActivity.automotive) {
-        activityInfoString = [NSString stringWithFormat:@"automotive"];
-    }
-    if (motionActivity.cycling) {
-       activityInfoString = [NSString stringWithFormat:@"cycling"];
-    }
-    if (motionActivity.unknown) {
-       activityInfoString = [NSString stringWithFormat:@"unknown"];
-    }
-    
-    if (!motionActivity.unknown && !motionActivity.cycling && !motionActivity.running && !motionActivity.walking && !motionActivity.stationary){
-        activityInfoString = @"None";
-        NSLog(@"%@", motionActivity);
-    }
-    NSLog(@" \n UNKNNOWN :%d,STATIONARY: %d WALKING: %d RUNNING: %d AUTOMOTIVE: %d CYCLING: %d", motionActivity.unknown, motionActivity.stationary, motionActivity.walking, motionActivity.running, motionActivity.automotive, motionActivity.cycling);
-
-    NSString * vocalString = [NSString stringWithFormat:@"%@ : %@",activityInfoString,confidenceString];
-    NSLog(@"%@", vocalString);
-
-    [self notifyByVoiceWithString:vocalString];
-    
 }
-- (void)onlyConfidenceChanged:(CMMotionActivity*)motionActivity{
-    
-    NSLog(@"Only conficenceChanged to %li", (long)motionActivity.confidence);
+
+
+- (void)confidenceChanged:(CMMotionActivity*)motionActivity{
+    NSLog(@"Confidence Changed");
     previousConfidence = motionActivity.confidence;
    
-    NSString * activityInfoString = [NSString new];
-    NSString * confidenceString = [NSString new];
-
-    if (motionActivity.confidence== CMMotionActivityConfidenceHigh) {
-        confidenceString = @"DEFINETELY ";
-    }
-    if (motionActivity.confidence== CMMotionActivityConfidenceMedium){
-        confidenceString = @"PROBABLY ";
-    }
-    if (motionActivity.confidence==CMMotionActivityConfidenceLow) {
-        confidenceString = @"UNLIKELY...";
-    }
-    NSLog(@"%@", confidenceString);
-    if (motionActivity.stationary) {
-        activityInfoString = [NSString stringWithFormat:@"stationary"];;
-    }
-    if (motionActivity.walking) {
-        activityInfoString = [NSString stringWithFormat:@"walking"];
-    }
-    if (motionActivity.running) {
-        activityInfoString = [NSString stringWithFormat:@"running"];
-    }
-    if (motionActivity.automotive) {
-        activityInfoString = [NSString stringWithFormat:@"automotive"];
-    }
-    if (motionActivity.cycling) {
-        activityInfoString = [NSString stringWithFormat:@"cycling"];
-    }
-    if (motionActivity.unknown) {
-        activityInfoString = [NSString stringWithFormat:@"unknown"];
-    }
-    if (!motionActivity.unknown && !motionActivity.cycling && !motionActivity.running && !motionActivity.walking && !motionActivity.stationary){
-        activityInfoString = @"NOTHING";
-    }
+    NSString * activityInfoString = [NSString stringWithFormat:@"%@, confidence:%li",[self resolveActivityTypeofActivity:motionActivity], (long)motionActivity.confidence];
     NSLog(@"%@", activityInfoString);
-
 }
 
 - (void)startNewSessionWithActivity:(CMMotionActivity*)activity{
-
+    RLMRealm *realm = [RLMRealm defaultRealm];
     
     Activity * dbActivity = [Activity new];
+    Session * dbSession = [Session new];
+   
+    dbSession.uniqueId = [[NSUUID UUID] UUIDString];
+    dbActivity.uniqueId = [[NSUUID UUID] UUIDString];
+
     dbActivity.unknown =activity.unknown;
+    dbActivity.stationary = activity.stationary;
+    dbActivity.walking = activity.walking;
+    dbActivity.running = activity.running;
+    dbActivity.automotive = activity.automotive;
+    dbActivity.cycling =    activity.cycling;
+    dbActivity.startTime = activity.startDate;
+    dbActivity.session = dbSession;
+    
+    dbSession.startTime = activity.startDate;
+    currentSession = dbSession.uniqueId;
+    currentActivity = dbActivity.uniqueId;
+    
+    [realm beginWriteTransaction];
+    [realm addObject:dbSession];
+    [realm commitWriteTransaction];
+    NSLog(@"Created new Session with activity %@", activity);
+}
+
+
+- (void)stopCurrentSession{
+    
+    
+}
+
+
+//---------------------------------------------------------------------------
+#pragma mark - Location handling and delegate methods
+//---------------------------------------------------------------------------
+
+- (void)startLocationDetection{
+    
+        if ([CLLocationManager locationServicesEnabled]){
+            
+            NSLog(@"Start updating locations  ");
+            [self.locationManager  startUpdatingLocation];
+        }
+        else {
+        //Location services are not enabled.prompt the user to enable the location services
+        NSLog(@"Location services are not enabled, show notification to the user");
+        }
+}
+
+- (void)stopLocationDetection{
+    if (self.locationManager){
+        
+        [self.locationManager stopUpdatingLocation];
+    }
+    
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    
+    CLLocation *location = [locations lastObject];
+    [self persistNewLocationForCurrentActivity:location];
+    
+}
+
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    
+    NSLog(@"Location manager failed error:%@", error);
+}
+    
+
+
+//---------------------------------------------------------------------------
+#pragma mark - Persisting methods
+//---------------------------------------------------------------------------
+
+- (void)persistNewActivity:(CMMotionActivity*)activity{
+    
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    Session *session = [Session objectInRealm:realm forPrimaryKey:currentSession];
+    if (!session) {
+        NSLog(@"Error: No Session");
+        return;
+    }
+    Activity *dbActivity = [Activity new];
+   
+    dbActivity.uniqueId = [[NSUUID UUID] UUIDString];
+    currentActivity = dbActivity.uniqueId;
+   
+    dbActivity.unknown = activity.unknown;
     dbActivity.stationary = activity.stationary;
     dbActivity.walking = activity.walking;
     dbActivity.running = activity.running;
     dbActivity.automotive = activity.automotive;
     dbActivity.cycling =  activity.cycling;
     dbActivity.startTime = activity.startDate;
-    dbActivity.locations = nil;
+    dbActivity.session = session;
     
-    currentActivity = dbActivity;
-    
-    if (!activitySession || activitySession.activities.count< 1) {
-       
-        activitySession = [Session new];
-        activitySession.startTime = activity.startDate;
-        [activitySession.activities addObject:dbActivity];
-    }
-    else{
-        [activitySession.activities addObject:dbActivity];
-    }
-
-    
-    [self startLocatonUpdates];
-    [self commitSession:activitySession];
-    activitySession = nil;
-    
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"MotionActivityChangedNotification" object:dbActivity];
-}
-
-//----------------------------------------------------------------------------------------
-#pragma mark Core Location handling and  Delegate methods
-//----------------------------------------------------------------------------------------
-
-- (void)startLocatonUpdates{
    
-    if ([CLLocationManager locationServicesEnabled]){
-        _locationManager = [CLLocationManager new];
-        _locationManager.delegate = self;
-        [_locationManager startUpdatingLocation];
-        NSLog(@"Starting Location updates...");
-
-    }
-    else{
-        
-        NSLog(@"Location services not enabled");
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-   
-    NSLog(@" OLD LOC: Lat: %f Lon: %f", oldLocation.coordinate.latitude, oldLocation.coordinate.longitude);
-    NSLog(@" NEW LOC: Lat: %f Lon: %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
-    
-    Location *currentLocation = [Location new];
-    currentLocation.timestamp = newLocation.timestamp;
-    currentLocation.latitude = newLocation.coordinate.latitude;
-    currentLocation.longitude = newLocation.coordinate.longitude;
-    currentLocation.speed = newLocation.speed;
-   
-    //Add Location Object to Activity
-    NSLog(@"Need to add location to activity array location is %@", currentLocation);
-    
-}
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    NSLog(@"Location manager failed with error: %@", error);
+    [realm beginWriteTransaction];
+    [realm addOrUpdateObject:dbActivity];
+    [realm commitWriteTransaction];
+    NSLog(@"Location persisted to activity %@", [self resolveActivityTypeofActivity:activity]);
     
 }
 
-- (void) stopLocationUpdates{
-    
-    NSLog(@"Stopping Location updates");
-    if (_locationManager) {
-        [_locationManager stopUpdatingLocation];
-    }
-}
-
-//----------------------------------------------------------------------------------------
-#pragma mark Helper methods
-//----------------------------------------------------------------------------------------
-
-
-- (void)commitSession:(Session*)session{
-    NSLog(@"Writing to realm");
+- (void)persistNewLocationForCurrentActivity:(CLLocation *)location{
     
     RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    [realm addObject:session];
-    [realm commitWriteTransaction];
+    NSLog(@"Persisting new location...");
     
-    [activitySession.activities removeAllObjects];
+    if (currentActivity) {
+        Activity * activity = [Activity objectInRealm:realm forPrimaryKey:currentActivity];
+        if (!activity) {
+            NSLog(@"Error: No Current Activity");
+            return;
+        }
+        Location * dbLocation = [Location new];
+        
+        dbLocation.uniqueId = [[NSUUID UUID] UUIDString];
+        dbLocation.timestamp = location.timestamp;
+        dbLocation.longitude = location.coordinate.longitude;
+        dbLocation.latitude = location.coordinate.latitude;
+        dbLocation.horizontalAccuracy = location.horizontalAccuracy;
+        dbLocation.verticalAccuracy = location.verticalAccuracy;
+        dbLocation.speed = location.speed;
+        dbLocation.course = location.course;
+        dbLocation.activity = activity;
+        dbLocation.locationDescription = location.description;
+        
+        [realm beginWriteTransaction];
+        [realm addOrUpdateObject:dbLocation];
+        [realm commitWriteTransaction];
+        NSLog(@"Location Persisted!");
+    }
+    else if (!currentActivity){
+        
+        NSLog(@" No Current Activity, cannot persist");
+        
+    }
 }
 
 - (void) notifyByVoiceWithString:(NSString*)string{
-//    
-//        AVSpeechUtterance *utterance =[AVSpeechUtterance speechUtteranceWithString: string];
-//        _speechSyntesizer = [[AVSpeechSynthesizer alloc] init] ;
-//        [_speechSyntesizer speakUtterance:utterance];
+    
+    if ([_speechSyntesizer isSpeaking] ){
+        [_speechSyntesizer stopSpeakingAtBoundary:0];
+    }
+    AVSpeechUtterance *utterance =[AVSpeechUtterance speechUtteranceWithString: string];
+    _speechSyntesizer = [[AVSpeechSynthesizer alloc] init] ;
+    [_speechSyntesizer speakUtterance:utterance];
 }
+
 
 @end

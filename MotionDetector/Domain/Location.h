@@ -8,20 +8,23 @@
 
 #import <Realm/Realm.h>
 
+@class Activity;
+
 @interface Location : RLMObject
 
-@property NSString* locationDescription;
-@property NSDate* timestamp;
+@property NSString * uniqueId;
+@property Activity *activity;
+@property NSString *locationDescription;
+@property NSDate *timestamp;
 
 @property double speed;
-@property double direction;
+@property double course;
 @property double longitude;
 @property double latitude;
 @property double distance;
-@property double acuracy;
+@property double horizontalAccuracy;
+@property double verticalAccuracy;
 
 @end
 
-// This protocol enables typed collections. i.e.:
-// RLMArray<Location>
 RLM_ARRAY_TYPE(Location)

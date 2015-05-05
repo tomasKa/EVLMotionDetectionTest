@@ -10,16 +10,12 @@
 #import "Activity.h"
 
 
-@class Session;
 
 @interface Session : RLMObject
 
-@property RLMArray<Activity> *activities;
+@property NSString * uniqueId;
 @property NSDate * startTime;
 
-
+@property (readonly) NSArray *activities;
 @end
-
-// This protocol enables typed collections. i.e.:
-// RLMArray<Session>
 RLM_ARRAY_TYPE(Session)

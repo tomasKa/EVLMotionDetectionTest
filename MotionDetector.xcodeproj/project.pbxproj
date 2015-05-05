@@ -15,8 +15,8 @@
 		C383E84A1AEFA6C400AB984D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C383E8491AEFA6C400AB984D /* CoreLocation.framework */; };
 		C383E84C1AEFA6CD00AB984D /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C383E84B1AEFA6CD00AB984D /* CoreMotion.framework */; };
 		C383E8501AEFA85900AB984D /* EVLMotionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C383E84F1AEFA85900AB984D /* EVLMotionManager.m */; };
-		C383E8531AEFA87300AB984D /* EVLLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C383E8521AEFA87300AB984D /* EVLLocationManager.m */; };
 		C383E8561AEFC11800AB984D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C383E8551AEFC11800AB984D /* AVFoundation.framework */; };
+		C3CC4C411AF7B6BC00DF7420 /* EVLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = C3CC4C401AF7B6BC00DF7420 /* EVLConstants.m */; };
 		C3D0D0251AEF7BEF005A006B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0D0241AEF7BEF005A006B /* main.m */; };
 		C3D0D0281AEF7BEF005A006B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0D0271AEF7BEF005A006B /* AppDelegate.m */; };
 		C3D0D02B1AEF7BEF005A006B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0D02A1AEF7BEF005A006B /* ViewController.m */; };
@@ -51,9 +51,9 @@
 		C383E84B1AEFA6CD00AB984D /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		C383E84E1AEFA85900AB984D /* EVLMotionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVLMotionManager.h; path = Controller/EVLMotionManager.h; sourceTree = "<group>"; };
 		C383E84F1AEFA85900AB984D /* EVLMotionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EVLMotionManager.m; path = Controller/EVLMotionManager.m; sourceTree = "<group>"; };
-		C383E8511AEFA87300AB984D /* EVLLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVLLocationManager.h; path = Controller/EVLLocationManager.h; sourceTree = "<group>"; };
-		C383E8521AEFA87300AB984D /* EVLLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EVLLocationManager.m; path = Controller/EVLLocationManager.m; sourceTree = "<group>"; };
 		C383E8551AEFC11800AB984D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C3CC4C3F1AF7B6BC00DF7420 /* EVLConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EVLConstants.h; path = Domain/EVLConstants.h; sourceTree = "<group>"; };
+		C3CC4C401AF7B6BC00DF7420 /* EVLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EVLConstants.m; path = Domain/EVLConstants.m; sourceTree = "<group>"; };
 		C3D0D01F1AEF7BEF005A006B /* MotionDetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionDetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D0D0231AEF7BEF005A006B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3D0D0241AEF7BEF005A006B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -109,8 +109,6 @@
 			children = (
 				C383E84E1AEFA85900AB984D /* EVLMotionManager.h */,
 				C383E84F1AEFA85900AB984D /* EVLMotionManager.m */,
-				C383E8511AEFA87300AB984D /* EVLLocationManager.h */,
-				C383E8521AEFA87300AB984D /* EVLLocationManager.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -189,6 +187,8 @@
 		C3D0D04B1AEF8675005A006B /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				C3CC4C3F1AF7B6BC00DF7420 /* EVLConstants.h */,
+				C3CC4C401AF7B6BC00DF7420 /* EVLConstants.m */,
 				C383E82C1AEF889100AB984D /* Session.h */,
 				C383E82D1AEF889100AB984D /* Session.m */,
 				C383E82F1AEF88AE00AB984D /* Activity.h */,
@@ -262,6 +262,9 @@
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = V97DYPZ9HQ;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Maps.iOS = {
 								enabled = 0;
 							};
@@ -350,9 +353,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3CC4C411AF7B6BC00DF7420 /* EVLConstants.m in Sources */,
 				C383E82E1AEF889100AB984D /* Session.m in Sources */,
 				C3D0D02B1AEF7BEF005A006B /* ViewController.m in Sources */,
-				C383E8531AEFA87300AB984D /* EVLLocationManager.m in Sources */,
 				C3D0D0281AEF7BEF005A006B /* AppDelegate.m in Sources */,
 				C383E8501AEFA85900AB984D /* EVLMotionManager.m in Sources */,
 				C3D0D0251AEF7BEF005A006B /* main.m in Sources */,

@@ -10,6 +10,15 @@
 
 @implementation Session
 
++ (NSString *)primaryKey {
+    return @"uniqueId";
+}
+
+- (NSArray *)activities {
+    return [self linkingObjectsOfClass:@"Activity" forProperty:@"uniqueId"];
+}
+
+
 // Specify default values for properties
 
 //+ (NSDictionary *)defaultPropertyValues

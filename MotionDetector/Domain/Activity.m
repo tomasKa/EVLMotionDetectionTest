@@ -10,6 +10,14 @@
 
 @implementation Activity
 
++ (NSString *)primaryKey {
+    return @"uniqueId";
+}
+
+- (NSArray *)locations {
+    return [self linkingObjectsOfClass:@"Location" forProperty:@"uniqueId"];
+}
+
 // Specify default values for properties
 
 //+ (NSDictionary *)defaultPropertyValues
