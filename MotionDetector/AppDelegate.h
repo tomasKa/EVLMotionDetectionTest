@@ -10,7 +10,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "EVLMotionManager.h"
-#import "EVLLocationManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
