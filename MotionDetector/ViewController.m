@@ -27,12 +27,21 @@
 
 - (void)uppdateInterfaceWithActivity:(NSNotification*)notification{
     
-          NSLog(@"Updating viewController UI with Activity %@",notification );
-        NSDateFormatter * formatterTime = [NSDateFormatter new];
-        formatterTime.dateFormat = @"hh : mm : ss";
-        _currentActivityDurationLabel.text = [formatterTime stringFromDate:[notification.object valueForKey:@"startTime"]];
+        NSLog(@"Updating viewController UI with Activity %@",notification.object);
+//        NSDateFormatter * formatterTime = [NSDateFormatter new];
+//        formatterTime.dateFormat = @"hh : mm : ss";
+//        _currentActivityDurationLabel.text = [formatterTime stringFromDate:[notification.object valueForKey:@"startTime"]];
+   
     
+    if (!notification.object) {
+        NSLog(@"Notification object not found");
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _activityTypeLabel.text = notification.object;
+    });
     
+//    [_activityTypeLabel performSelectorOnMainThread:@selector(setText:) withObject:notification.object waitUntilDone:YES];
 }
 
 - (void)timerLabel{

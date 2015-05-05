@@ -10,6 +10,9 @@
 
 @implementation Location
 
++ (NSString *)primaryKey {
+    return @"uniqueId";
+}
 // Specify default values for properties
 
 //+ (NSDictionary *)defaultPropertyValues

@@ -7,23 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreMotion/CoreMotion.h>
 #import <AVFoundation/AVFoundation.h>
-#import <Realm/Realm.h>
-#import "Activity.h"
-#import "Session.h"
-#import "Location.h"
+#import <CoreLocation/CoreLocation.h>
 
-
+@class CMMotionActivityManager;
+@class AVSpeechSynthesizer;
 
 @interface EVLMotionManager : NSObject <AVSpeechSynthesizerDelegate>
 
 @property (nonatomic, strong)CMMotionActivityManager *activityManager;
 @property (nonatomic, strong)AVSpeechSynthesizer *speechSyntesizer;
-
-
-@property BOOL walking;
-
 -(void) startActivityDetection;
 
 @end

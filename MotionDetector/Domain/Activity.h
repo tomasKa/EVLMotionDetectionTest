@@ -10,11 +10,16 @@
 #import "Location.h"
 #import <CoreMotion/CoreMotion.h>
 
+@class Session;
+
 @interface Activity : RLMObject
 
 @property NSDate* startTime;
+@property NSString * uniqueId;
 
-//Activity types CMMotion may record 2 activities at once therefore bools for each
+//Activity types CMMotion may record more than one activity at once therefore bools for each
+@property Session *session;
+
 @property BOOL unknown;
 @property BOOL stationary;
 @property BOOL walking;
@@ -24,7 +29,4 @@
 
 @property RLMArray<Location>* locations;
 @end
-
-// This protocol enables typed collections. i.e.:
-// RLMArray<Activity>
 RLM_ARRAY_TYPE(Activity)
