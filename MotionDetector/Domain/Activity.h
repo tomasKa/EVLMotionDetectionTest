@@ -26,7 +26,7 @@
 @property BOOL running;
 @property BOOL automotive;
 @property BOOL cycling;
+@property (readonly) NSArray *locations;
 
-@property RLMArray<Location>* locations;
 @end
 RLM_ARRAY_TYPE(Activity)

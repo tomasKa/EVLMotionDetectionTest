@@ -11,6 +11,7 @@
 @class Activity;
 
 @interface Location : RLMObject
+
 @property NSString * uniqueId;
 @property Activity *activity;
 @property NSString *locationDescription;

@@ -11,12 +11,16 @@
 #import <CoreLocation/CoreLocation.h>
 
 @class CMMotionActivityManager;
+@class CLLocationManager;
 @class AVSpeechSynthesizer;
 
-@interface EVLMotionManager : NSObject <AVSpeechSynthesizerDelegate>
+@interface EVLMotionManager : NSObject <AVSpeechSynthesizerDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong)CMMotionActivityManager *activityManager;
+@property (nonatomic, strong)CLLocationManager *locationManager;
 @property (nonatomic, strong)AVSpeechSynthesizer *speechSyntesizer;
+
+
 -(void) startActivityDetection;
 
 @end
