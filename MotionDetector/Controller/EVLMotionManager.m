@@ -36,8 +36,6 @@
         }
         //Motion manager
         self.activityManager = [[CMMotionActivityManager alloc] init];
-        
-        
     }
     return self;
 }
@@ -74,9 +72,7 @@
                 
                 NSLog(@"Activity is not stationary");
                 currentSession = nil;
-                
             }
-        
             [[NSNotificationCenter defaultCenter] postNotificationName:@"MotionActivityChangedNotification" object:[self resolveActivityTypeofActivity:activity]];
     }];
 }
