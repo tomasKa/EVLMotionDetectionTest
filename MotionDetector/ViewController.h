@@ -17,5 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentActivityDurationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sessionDurationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *activityConfidenceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sessionActivityStatusLabel;
+
 @end
 
