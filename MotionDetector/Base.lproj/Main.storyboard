@@ -57,7 +57,7 @@
                                 <color key="textColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Session start time" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHr-Bt-kZW">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last session start time" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHr-Bt-kZW">
                                 <rect key="frame" x="85" y="270" width="213" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="3r0-NS-4Gy"/>
@@ -67,8 +67,8 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Session OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgr-JP-Gvg">
-                                <rect key="frame" x="-2" y="334" width="376" height="63"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Session OFF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pgr-JP-Gvg">
+                                <rect key="frame" x="-1" y="334" width="376" height="63"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="63" id="jRa-kt-Ol6"/>
                                 </constraints>
@@ -80,6 +80,15 @@
                                 <rect key="frame" x="-1" y="419" width="376" height="27"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="22"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Persisted activity:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vgy-Dp-ALM">
+                                <rect key="frame" x="-1" y="316" width="376" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="DjG-Xv-gkt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -95,6 +104,9 @@
                             <constraint firstItem="f74-4H-CCc" firstAttribute="top" secondItem="d43-mX-tdJ" secondAttribute="bottom" constant="18" id="QXB-it-Aq8"/>
                             <constraint firstItem="fHr-Bt-kZW" firstAttribute="top" secondItem="f74-4H-CCc" secondAttribute="bottom" constant="-7" id="T13-Cq-sHn"/>
                             <constraint firstItem="kv3-WJ-xA7" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="Un6-se-giq"/>
+                            <constraint firstItem="vgy-Dp-ALM" firstAttribute="top" secondItem="fHr-Bt-kZW" secondAttribute="bottom" constant="20" id="UoS-tg-TaL"/>
+                            <constraint firstItem="vgy-Dp-ALM" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="Utu-4Y-8C5"/>
+                            <constraint firstItem="vgy-Dp-ALM" firstAttribute="centerX" secondItem="fHr-Bt-kZW" secondAttribute="centerX" constant="-4.5" id="ZNg-15-CDZ"/>
                             <constraint firstItem="LXa-Ov-Fwb" firstAttribute="centerX" secondItem="kv3-WJ-xA7" secondAttribute="centerX" constant="2.5" id="b6m-Hw-Qs8"/>
                             <constraint firstItem="fHr-Bt-kZW" firstAttribute="centerX" secondItem="Pgr-JP-Gvg" secondAttribute="centerX" constant="4.5" id="bOj-U5-tq4"/>
                             <constraint firstItem="f74-4H-CCc" firstAttribute="centerX" secondItem="d43-mX-tdJ" secondAttribute="centerX" constant="2.5" id="cS1-NU-5b1"/>
@@ -112,6 +124,7 @@
                         <outlet property="activityTypeLabel" destination="kv3-WJ-xA7" id="o7d-P6-QWR"/>
                         <outlet property="currentActivityDurationLabel" destination="O0h-en-Slo" id="I83-eM-rgM"/>
                         <outlet property="dataSummaryLabel" destination="rJe-9n-EXp" id="qTO-H2-gxN"/>
+                        <outlet property="persistedActivityInfoLabel" destination="vgy-Dp-ALM" id="DGW-Uo-5OQ"/>
                         <outlet property="sessionActivityStatusLabel" destination="Pgr-JP-Gvg" id="ipF-ZO-Y8y"/>
                         <outlet property="sessionDurationLabel" destination="f74-4H-CCc" id="agX-nP-qA0"/>
                     </connections>

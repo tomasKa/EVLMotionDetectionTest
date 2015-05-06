@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityConfidenceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sessionActivityStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dataSummaryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *persistedActivityInfoLabel;
 
 @end
 

@@ -21,10 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uppdateInterfaceWithActivity:) name:@"MotionActivityChangedNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uppdateInterfaceWithActivity:) name:@"MotionActivityConfidenceChangedNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uppdateInterfaceWithActivity:) name:@"SessionActivityStatusChangedToNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uppdateInterfaceWithActivity:) name:@"MotionActivityPersistedNotification" object:nil];
+
    }
 - (void)uppdateInterfaceWithActivity:(NSNotification*)notification{
     
@@ -47,15 +48,25 @@
     if ([notification.name isEqual:@"SessionActivityStatusChangedToNotification"]){
         dispatch_async(dispatch_get_main_queue(), ^{
             _sessionActivityStatusLabel.text = notification.object;
+            if([notification.object isEqualToString:@"Session OFF"]){
+                _sessionDurationLabel.text = @"00:00:00";
+            }
+            else{
             _sessionDurationLabel.text = [[self timeFormatter] stringFromDate:[NSDate dateWithTimeIntervalSinceNow:0]];
+            }
         });
     }
+    if ([notification.name isEqual:@"MotionActivityPersistedNotification"]){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _persistedActivityInfoLabel.text = [NSString stringWithFormat:@"Last saved activity:%@", notification.object];
+        });
+    }
+    
     RLMResults * sessions = [Session allObjects];
     RLMResults * activities = [Activity allObjects];
     RLMResults * locations = [Location allObjects];
     NSString *outputString = [NSString stringWithFormat:@"Sessions:%lu \n Activities:%lu \n Locations:%lu", (unsigned long)sessions.count, (unsigned long)activities.count, (unsigned long)locations.count];
-   
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         _dataSummaryLabel.text = outputString;
     });

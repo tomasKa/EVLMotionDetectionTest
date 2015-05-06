@@ -13,7 +13,8 @@
 #import "Session.h"
 #import "Location.h"
 #import "EVLConstants.h"
-@import CoreLocation;
+#import <CoreLocation/CoreLocation.h>
+
 
 @implementation EVLMotionManager
 {
@@ -115,17 +116,20 @@
         if (!currentSession){
             [self startNewSessionWithActivity:activity];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionActivityStatusChangedToNotification" object:@"Session ON"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"MotionActivityPersistedNotification" object:[self resolveActivityTypeofActivity:activity]];
         }
         else{
             [self persistNewActivity:activity];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"MotionActivityPersistedNotification" object:[self resolveActivityTypeofActivity:activity]];
         }
     }
     
     else if(activity.confidence == CMMotionActivityConfidenceHigh && !activity.automotive && secondsSinceLastPersistedActivity>60){
-    
-        NSLog(@"Stopping session");
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionActivityStatusChangedToNotification" object:@"Session OFF"];
-        [self stopCurrentSession];
+        if (currentSession) {
+            NSLog(@"Stopping session");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionActivityStatusChangedToNotification" object:@"Session OFF"];
+            [self stopCurrentSession];
+        }
     }
     
     //Interface update notifications for any activity events
