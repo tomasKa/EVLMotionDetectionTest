@@ -8,7 +8,10 @@
 
 #import "ViewController.h"
 #import "EVLMotionManager.h"
-
+#import <Realm/Realm.h>
+#import "Session.h"
+#import "Location.h"
+#import "Activity.h"
 
 @interface ViewController ()
 
@@ -23,7 +26,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uppdateInterfaceWithActivity:) name:@"MotionActivityConfidenceChangedNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uppdateInterfaceWithActivity:) name:@"SessionActivityStatusChangedToNotification" object:nil];
    }
-
 - (void)uppdateInterfaceWithActivity:(NSNotification*)notification{
     
         NSLog(@"Updating viewController UI with Activity %@",notification.object);
@@ -48,6 +50,15 @@
             _sessionDurationLabel.text = [[self timeFormatter] stringFromDate:[NSDate dateWithTimeIntervalSinceNow:0]];
         });
     }
+    RLMResults * sessions = [Session allObjects];
+    RLMResults * activities = [Activity allObjects];
+    RLMResults * locations = [Location allObjects];
+    NSString *outputString = [NSString stringWithFormat:@"Sessions:%lu \n Activities:%lu,\n Locations:%lu", (unsigned long)sessions.count, (unsigned long)activities.count, (unsigned long)locations.count];
+   
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _dataSummaryLabel.text = outputString;
+    });
 }
 
 - (NSDateFormatter*)timeFormatter{

@@ -111,7 +111,7 @@
         NSLog(@"Seconds since last persisted activity %li", (long)secondsSinceLastPersistedActivity);
     }
     
-    if (activity.confidence == CMMotionActivityConfidenceHigh && activity.stationary) {
+    if (activity.confidence == CMMotionActivityConfidenceHigh && activity.automotive) {
         if (!currentSession){
             [self startNewSessionWithActivity:activity];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionActivityStatusChangedToNotification" object:@"Session ON"];
@@ -121,7 +121,7 @@
         }
     }
     
-    else if(activity.confidence == CMMotionActivityConfidenceHigh && !activity.stationary && secondsSinceLastPersistedActivity>60){
+    else if(activity.confidence == CMMotionActivityConfidenceHigh && !activity.automotive && secondsSinceLastPersistedActivity>60){
     
         NSLog(@"Stopping session");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionActivityStatusChangedToNotification" object:@"Session OFF"];

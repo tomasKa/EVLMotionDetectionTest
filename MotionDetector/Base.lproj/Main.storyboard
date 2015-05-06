@@ -76,13 +76,22 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJe-9n-EXp">
+                                <rect key="frame" x="-1" y="419" width="376" height="27"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="22"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.29803921568627451" green="0.71764705882352942" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="width" secondItem="rJe-9n-EXp" secondAttribute="width" id="36l-Cn-ovH"/>
                             <constraint firstItem="O0h-en-Slo" firstAttribute="centerX" secondItem="d43-mX-tdJ" secondAttribute="centerX" constant="1.5" id="6V2-zc-VMl"/>
                             <constraint firstItem="d43-mX-tdJ" firstAttribute="top" secondItem="O0h-en-Slo" secondAttribute="bottom" constant="2" id="BP3-nA-KKa"/>
                             <constraint firstItem="LXa-Ov-Fwb" firstAttribute="centerX" secondItem="O0h-en-Slo" secondAttribute="centerX" constant="-0.5" id="CK6-f7-NNm"/>
                             <constraint firstItem="LXa-Ov-Fwb" firstAttribute="top" secondItem="kv3-WJ-xA7" secondAttribute="bottom" constant="20" id="Djm-Q5-k4V"/>
+                            <constraint firstItem="rJe-9n-EXp" firstAttribute="top" secondItem="Pgr-JP-Gvg" secondAttribute="bottom" constant="22" id="LUe-z7-tDH"/>
+                            <constraint firstItem="Pgr-JP-Gvg" firstAttribute="centerX" secondItem="rJe-9n-EXp" secondAttribute="centerX" id="LdA-1L-gJI"/>
                             <constraint firstItem="f74-4H-CCc" firstAttribute="top" secondItem="d43-mX-tdJ" secondAttribute="bottom" constant="18" id="QXB-it-Aq8"/>
                             <constraint firstItem="fHr-Bt-kZW" firstAttribute="top" secondItem="f74-4H-CCc" secondAttribute="bottom" constant="-7" id="T13-Cq-sHn"/>
                             <constraint firstItem="kv3-WJ-xA7" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="Un6-se-giq"/>
@@ -102,6 +111,7 @@
                         <outlet property="activityConfidenceLabel" destination="LXa-Ov-Fwb" id="B6I-bo-SeI"/>
                         <outlet property="activityTypeLabel" destination="kv3-WJ-xA7" id="o7d-P6-QWR"/>
                         <outlet property="currentActivityDurationLabel" destination="O0h-en-Slo" id="I83-eM-rgM"/>
+                        <outlet property="dataSummaryLabel" destination="rJe-9n-EXp" id="qTO-H2-gxN"/>
                         <outlet property="sessionActivityStatusLabel" destination="Pgr-JP-Gvg" id="ipF-ZO-Y8y"/>
                         <outlet property="sessionDurationLabel" destination="f74-4H-CCc" id="agX-nP-qA0"/>
                     </connections>
