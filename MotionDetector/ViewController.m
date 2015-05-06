@@ -53,7 +53,7 @@
     RLMResults * sessions = [Session allObjects];
     RLMResults * activities = [Activity allObjects];
     RLMResults * locations = [Location allObjects];
-    NSString *outputString = [NSString stringWithFormat:@"Sessions:%lu \n Activities:%lu,\n Locations:%lu", (unsigned long)sessions.count, (unsigned long)activities.count, (unsigned long)locations.count];
+    NSString *outputString = [NSString stringWithFormat:@"Sessions:%lu \n Activities:%lu \n Locations:%lu", (unsigned long)sessions.count, (unsigned long)activities.count, (unsigned long)locations.count];
    
     
     dispatch_async(dispatch_get_main_queue(), ^{
