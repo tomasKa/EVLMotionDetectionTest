@@ -24,6 +24,7 @@
 		C3D0D0301AEF7BEF005A006B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3D0D02F1AEF7BEF005A006B /* Images.xcassets */; };
 		C3D0D0331AEF7BEF005A006B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D0D0311AEF7BEF005A006B /* LaunchScreen.xib */; };
 		C3D0D03F1AEF7BEF005A006B /* MotionDetectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D0D03E1AEF7BEF005A006B /* MotionDetectorTests.m */; };
+		C3DD60DA1AFA1E620079126E /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DD60D91AFA1E620079126E /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		C3D0D0381AEF7BEF005A006B /* MotionDetectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotionDetectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3D0D03D1AEF7BEF005A006B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3D0D03E1AEF7BEF005A006B /* MotionDetectorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MotionDetectorTests.m; sourceTree = "<group>"; };
+		C3DD60D91AFA1E620079126E /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				C383E84C1AEFA6CD00AB984D /* CoreMotion.framework in Frameworks */,
 				C383E84A1AEFA6C400AB984D /* CoreLocation.framework in Frameworks */,
 				C383E8481AEFA6B100AB984D /* Foundation.framework in Frameworks */,
+				C3DD60DA1AFA1E620079126E /* Crashlytics.framework in Frameworks */,
 				B607AD6A349FAD815433D146 /* libPods-MotionDetector.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +98,7 @@
 		0902A4B3316FE5CB2EF1CF0A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3DD60D91AFA1E620079126E /* Crashlytics.framework */,
 				C383E8551AEFC11800AB984D /* AVFoundation.framework */,
 				C383E84B1AEFA6CD00AB984D /* CoreMotion.framework */,
 				C383E8491AEFA6C400AB984D /* CoreLocation.framework */,
@@ -220,6 +224,7 @@
 				C3D0D01C1AEF7BEF005A006B /* Frameworks */,
 				C3D0D01D1AEF7BEF005A006B /* Resources */,
 				8E0F0A22F0EB782487F726D3 /* Copy Pods Resources */,
+				C3DD60D81AFA1E220079126E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -345,6 +350,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MotionDetector/Pods-MotionDetector-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C3DD60D81AFA1E220079126E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 863835f15321351015bcdb7c1aaddd3852454105 a02441f06c5ee89d930c581b5d76bc5a8c275efec5f47dee2d1dc9b871e06d75";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -488,6 +506,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MotionDetector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -500,6 +522,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MotionDetector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

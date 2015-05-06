@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <Crashlytics/Crashlytics.h>
 @interface AppDelegate ()
 
 @end
@@ -16,6 +16,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [Crashlytics startWithAPIKey:@"863835f15321351015bcdb7c1aaddd3852454105"];
+    
     
     
     NSError *setCategoryErr = nil;

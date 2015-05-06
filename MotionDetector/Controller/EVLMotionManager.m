@@ -171,13 +171,14 @@
     //Start detecting location
     [self startLocationDetection];
     NSLog(@"Created new Session with activity %@", activity);
+    [self notifyByVoiceWithString:[NSString stringWithFormat:@"Session Start: %@",[self resolveActivityTypeofActivity:activity]]];
 }
-
 
 - (void)stopCurrentSession{
     
     NSLog(@"Stoppong session...");
     currentSession = nil;
+    [self notifyByVoiceWithString:@"Sesstion Stopped"];
     [self stopLocationDetection];
 }
 
