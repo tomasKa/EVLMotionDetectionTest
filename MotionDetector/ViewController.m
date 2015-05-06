@@ -26,7 +26,6 @@
 
 - (void)uppdateInterfaceWithActivity:(NSNotification*)notification{
     
-    
         NSLog(@"Updating viewController UI with Activity %@",notification.object);
     if (!notification.object) {
         NSLog(@"Notification object not found");

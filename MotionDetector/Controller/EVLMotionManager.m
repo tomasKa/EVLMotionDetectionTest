@@ -39,7 +39,6 @@
     }
     return self;
 }
-
 - (void)startActivityDetection{
   
     [_activityManager startActivityUpdatesToQueue:[NSOperationQueue new] withHandler:^(CMMotionActivity *activity) {
@@ -94,7 +93,6 @@
 
 - (void)updateActivityWithNewActivity:(CMMotionActivity*)motionActivity{
     
-    
     if (!previousActivity) {
         previousActivity = [CMMotionActivity new];
     }
@@ -104,33 +102,33 @@
 
 - (void) handleNewActivity:(CMMotionActivity*)activity{
     
-    NSInteger minsSinceLastSession = 0;
-    if (currentSession) {
+    NSInteger secondsSinceLastPersistedActivity = 0;
+   
+    if (currentActivity) {
         RLMRealm * realm = [RLMRealm defaultRealm];
-        Session *session = [Session objectInRealm:realm forPrimaryKey:currentSession];
-        minsSinceLastSession = [self minutesFromDate:session.startTime];
+        Activity *dbActivity = [Activity objectInRealm:realm forPrimaryKey:currentActivity];
+        secondsSinceLastPersistedActivity = [self secondsFromDate:dbActivity.startTime];
+        NSLog(@"Seconds since last persisted activity %li", (long)secondsSinceLastPersistedActivity);
     }
     
     if (activity.confidence == CMMotionActivityConfidenceHigh && activity.stationary) {
         if (!currentSession){
             [self startNewSessionWithActivity:activity];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionActivityStatusChangedToNotification" object:@"Session ON"];
         }
         else{
             [self persistNewActivity:activity];
         }
-        
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionActivityStatusChangedToNotification" object:@"Session ON"];
     }
     
-    else if(activity.confidence == CMMotionActivityConfidenceHigh && !activity.stationary){
-    //(!activity.unknown && !activity.stationary && !activity.walking && !activity.running && !activity.automotive && !activity.cycling)
+    else if(activity.confidence == CMMotionActivityConfidenceHigh && !activity.stationary && secondsSinceLastPersistedActivity>60){
     
-    NSLog(@"Activity is not stationary");
+        NSLog(@"Stopping session");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionActivityStatusChangedToNotification" object:@"Session OFF"];
         [self stopCurrentSession];
     }
     
-    //Interface update notifications
+    //Interface update notifications for any activity events
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MotionActivityChangedNotification" object:[self resolveActivityTypeofActivity:activity]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MotionActivityConfidenceChangedNotification" object:[NSString stringWithFormat:@"Confidence: %li", (long)activity.confidence]];
 }
@@ -183,12 +181,12 @@
     [self stopLocationDetection];
 }
 
-- (NSInteger) minutesFromDate:(NSDate*)fromDate{
+- (NSInteger) secondsFromDate:(NSDate*)fromDate{
     //return difference in minuted between dates
     NSDate *nowDate = [NSDate dateWithTimeIntervalSinceNow:0];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *difference = [calendar components:NSCalendarUnitMinute fromDate:fromDate toDate:nowDate options:0];
-    return [difference minute];
+    NSDateComponents *difference = [calendar components:NSCalendarUnitSecond fromDate:fromDate toDate:nowDate options:0];
+    return [difference second];
 }
 //---------------------------------------------------------------------------
 #pragma mark - Location handling and delegate methods

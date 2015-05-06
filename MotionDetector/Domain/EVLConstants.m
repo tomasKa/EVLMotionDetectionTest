@@ -12,6 +12,6 @@ NSString *const kActivityTypeRunning = @"Running";
 NSString *const kActivityTypeWalking = @"Walking";
 NSString *const kActivityTypeAutomotive = @"Automotive";
 NSString *const kActivityTypeStationary = @"Stationary";
-NSString *const kActivityTypeCycling = @"Cysling";
+NSString *const kActivityTypeCycling = @"Cycling";
 NSString *const kActivityTypeAutomotiveStationary = @"Automotive stationary";
 NSString *const kActivityTypeUnknown = @"Unknown";
